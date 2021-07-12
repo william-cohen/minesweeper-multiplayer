@@ -1,0 +1,8 @@
+[package]
+name = "minesweeper-multiplayer"
+version = "0.1.0"
+authors = ["Will Cohen <willcohen3515@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+yew = "0.18"
