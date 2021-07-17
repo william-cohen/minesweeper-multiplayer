@@ -1,5 +1,7 @@
 $background: #FB7D23;
 $textColor: #ECE4B7;
+$flagColor: black;
+$bombColor: red;
 $clearedColor: $background;
 $cellColor: #FAC689;
 
@@ -40,6 +42,9 @@ div.board {
       outline: none;
       width: 42px;
       height: 42px;
+    }
+    svg {
+      fill: $textColor;
     }
   }
 }

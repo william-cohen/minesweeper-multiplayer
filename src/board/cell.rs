@@ -2,7 +2,10 @@ use yew::prelude::*;
 use yew::ComponentLink;
 use yew::Properties;
 
-// use flag::{Flag};
+mod flag;
+use crate::board::cell::flag::Flag;
+mod bomb;
+use crate::board::cell::bomb::Bomb;
 
 #[derive(Clone, Copy, Debug)]
 pub enum CellState {
@@ -47,15 +50,15 @@ pub struct Cell {
 }
 
 impl Cell {
-  fn symbol(self: &Cell) -> String {
+  fn symbol(self: &Cell) -> Html {
     // ConsoleService::info(format!("Getting symbol for: {:?}", self.props).as_str());
     match self.props.state {
-      CellState::Flagged => "🚩".to_string(),
-      CellState::Idle => " ".to_string(),
+      CellState::Flagged => html! { <Flag /> },
+      CellState::Idle => html! { " " },
       CellState::Cleared => match self.props.value {
-        CellValue::Proximity(0) => " ".to_string(),
-        CellValue::Proximity(m) => m.to_string(),
-        CellValue::Mine => "💣".to_string()
+        CellValue::Proximity(0) => html! { " " },
+        CellValue::Proximity(m) => html! { m.to_string() },
+        CellValue::Mine => html! { <Bomb /> }
       }
     }
   }
