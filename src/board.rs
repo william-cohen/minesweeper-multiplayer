@@ -85,7 +85,7 @@ impl Component for Board {
           self.board.clear_cell(x, y);
         },
         CellAction::Flag => {
-          self.board.flag_cell(x, y, CellState::Flagged);
+          self.board.flag_cell(x, y);
         }
       }
     }

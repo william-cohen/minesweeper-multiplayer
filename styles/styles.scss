@@ -2,7 +2,8 @@ $background: #656565;
 $textColor: #A6D3A0;
 $flagCellColor: #808782;
 $flagIconColor: #A6D3A0;
-$bombColor: red;
+$bombCellColor: #C47297;
+$bombIconColor: black;
 $clearedColor: $background;
 $cellColor: #A6D3A0;
 
@@ -32,17 +33,13 @@ div.board {
     height: 42px;
     &.cleared {
       background-color: $clearedColor;
-      border: none;
-      border-radius: 5px;
-      box-sizing: border-box;
       color: $textColor;
-      display: block;
-      font-size: 20px;
-      font-weight: bold;
-      margin: 2px;
-      outline: none;
-      width: 42px;
-      height: 42px;
+    }
+    &.mine {
+      background-color: $bombCellColor;
+      svg {
+        fill: $bombIconColor;
+      }
     }
     &.flagged {
       background-color: $flagCellColor;
@@ -51,6 +48,7 @@ div.board {
       }
     }
     svg {
+      margin: 5px;
       fill: $textColor;
     }
   }

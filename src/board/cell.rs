@@ -108,7 +108,12 @@ impl Component for Cell {
       match self.props.state {
       CellState::Flagged => "flagged".to_string(),
       CellState::Idle => "".to_string(),
-      CellState::Cleared => "cleared".to_string()
+      CellState::Cleared => {
+        match self.props.value {
+          CellValue::Proximity(_n) => "cleared".to_string(),
+          CellValue::Mine => "mine".to_string()
+        }
+      }
     });
 
     // ConsoleService::info(format!("Render: {:?}", symbol).as_str());

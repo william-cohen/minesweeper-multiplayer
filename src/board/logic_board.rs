@@ -148,8 +148,6 @@ impl LogicBoard {
   }
 
   pub fn clear_cell(self: &mut Self, x: usize, y: usize) {
-    ConsoleService::info(format!("[Board] Clearing cell: {:?}", (x, y)).as_str());
-
     let cell_option = self.get_cell_mut(x, y);
     if cell_option.is_none() {
       return
@@ -164,17 +162,21 @@ impl LogicBoard {
 
     match cell.value {
       CellValue::Proximity(0) => self.clear_around(x, y),
-      _ => {}
+      _ => ()
     }
   }
 
-  pub fn flag_cell(self: &mut Self, x: usize, y: usize, new_state: CellState) {
+  pub fn flag_cell(self: &mut Self, x: usize, y: usize) {
     ConsoleService::info(format!("[Board] Flagging cell: {:?}", (x, y)).as_str());
 
     let cell = self.get_cell_mut(x, y);
     
     cell.map(|cell| {
-      cell.state = new_state
+      cell.state = match cell.state {
+        CellState::Flagged => CellState::Idle,
+        CellState::Idle => CellState::Flagged,
+        _ => cell.state
+      }
     });
   }
 
