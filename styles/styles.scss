@@ -1,9 +1,10 @@
-$background: #FB7D23;
-$textColor: #ECE4B7;
-$flagColor: black;
+$background: #656565;
+$textColor: #A6D3A0;
+$flagCellColor: #808782;
+$flagIconColor: #A6D3A0;
 $bombColor: red;
 $clearedColor: $background;
-$cellColor: #FAC689;
+$cellColor: #A6D3A0;
 
 body {
   background-color: $background;
@@ -42,6 +43,12 @@ div.board {
       outline: none;
       width: 42px;
       height: 42px;
+    }
+    &.flagged {
+      background-color: $flagCellColor;
+      svg {
+        fill: $flagIconColor;
+      }
     }
     svg {
       fill: $textColor;
