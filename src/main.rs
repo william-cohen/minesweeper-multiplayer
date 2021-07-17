@@ -24,7 +24,7 @@ impl Component for GameModel {
       _link: link,
       height: 8,
       width: 8,
-      mines: 10
+      mines: 8
     }
   }
 

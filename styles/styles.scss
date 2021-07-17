@@ -1,0 +1,45 @@
+$background: #FB7D23;
+$textColor: #ECE4B7;
+$clearedColor: $background;
+$cellColor: #FAC689;
+
+body {
+  background-color: $background;
+}
+
+div.board {
+  display: flex;
+  flex-wrap: wrap;
+  /* -webkit-box-pack: center; */
+  justify-content: center;
+  margin: 10px auto 0px;
+  width: 414px;
+  .cell {
+    background-color: $cellColor;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: black;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 2px;
+    outline: none;
+    width: 42px;
+    height: 42px;
+    &.cleared {
+      background-color: $clearedColor;
+      border: none;
+      border-radius: 5px;
+      box-sizing: border-box;
+      color: $textColor;
+      display: block;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 2px;
+      outline: none;
+      width: 42px;
+      height: 42px;
+    }
+  }
+}

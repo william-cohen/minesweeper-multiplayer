@@ -1,7 +1,8 @@
 use yew::prelude::*;
 use yew::ComponentLink;
 use yew::Properties;
-use yew::services::console::ConsoleService;
+
+// use flag::{Flag};
 
 #[derive(Clone, Copy, Debug)]
 pub enum CellState {
@@ -10,6 +11,7 @@ pub enum CellState {
   Cleared
 }
 
+#[derive(Clone, Debug)]
 pub struct CellInfo {
   pub value: CellValue,
   pub state: CellState
@@ -46,12 +48,12 @@ pub struct Cell {
 
 impl Cell {
   fn symbol(self: &Cell) -> String {
-    ConsoleService::info(format!("Getting symbol for: {:?}", self.props).as_str());
+    // ConsoleService::info(format!("Getting symbol for: {:?}", self.props).as_str());
     match self.props.state {
       CellState::Flagged => "🚩".to_string(),
       CellState::Idle => " ".to_string(),
       CellState::Cleared => match self.props.value {
-        CellValue::Proximity(0) => "butt".to_string(),
+        CellValue::Proximity(0) => " ".to_string(),
         CellValue::Proximity(m) => m.to_string(),
         CellValue::Mine => "💣".to_string()
       }
@@ -96,12 +98,21 @@ impl Component for Cell {
     });
 
     let symbol = self.symbol();
+    let mut cell_classes = Vec::<String>::new();
+    cell_classes.push(String::from("cell"));
 
-    ConsoleService::info(format!("Render: {:?}", symbol).as_str());
+    cell_classes.push(
+      match self.props.state {
+      CellState::Flagged => "flagged".to_string(),
+      CellState::Idle => "".to_string(),
+      CellState::Cleared => "cleared".to_string()
+    });
+
+    // ConsoleService::info(format!("Render: {:?}", symbol).as_str());
 
 
     html! {
-      <button onclick=onclick oncontextmenu=onrightclick>{ symbol }</button>
+      <button class=classes!(cell_classes) onclick=onclick oncontextmenu=onrightclick>{ symbol }</button>
     }
   }
 }
