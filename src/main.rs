@@ -22,9 +22,9 @@ impl Component for GameModel {
   fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
     Self {
       _link: link,
-      height: 8,
-      width: 8,
-      mines: 8
+      height: 16,
+      width: 16,
+      mines: 40
     }
   }
 

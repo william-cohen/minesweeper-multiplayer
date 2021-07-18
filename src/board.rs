@@ -1,7 +1,11 @@
+use core::time::Duration;
+
 use yew::prelude::*;
 use yew::ComponentLink;
 use yew::Properties;
 use yew::services::console::ConsoleService;
+use yew::services::IntervalService;
+use yew::services::interval::IntervalTask;
 
 use yew::virtual_dom::VNode::*;
 use yew::virtual_dom::VList;
@@ -10,6 +14,8 @@ mod cell;
 use cell::{Cell, CellInfo, CellState, CellAction};
 mod logic_board;
 use logic_board::LogicBoard;
+
+use crate::board::cell::bomb::Bomb;
 
 #[derive(Properties, Copy, Clone)]
 pub struct Props {
@@ -20,14 +26,18 @@ pub struct Props {
 
 #[derive(Debug)]
 pub enum Msg {
-  CellMsg(usize, usize, CellAction)
+  CellMsg(usize, usize, CellAction),
+  SecondElapsed
 }
 
 
 pub struct Board {
   link: ComponentLink<Self>,
   props: Props,
-  board: LogicBoard
+  board: LogicBoard,
+  remaining_mines: i8,
+  timer: IntervalTask,
+  seconds_elapsed: u16
 }
 
 impl Board {
@@ -49,7 +59,7 @@ impl Board {
     let mut y: usize = 0;
     for row in self.board.get_board_rows() {
       let row_html = html! {
-        <div>
+        <div class="cell--row">
         {
           self.render_cell_row(y, &row)
         }
@@ -69,10 +79,16 @@ impl Component for Board {
   fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
     let mut board = LogicBoard::new_random(props.height, props.width, props.mines);
     board.init();
+
+    let timer = IntervalService::spawn(Duration::new(1, 0), link.callback(|_| Msg::SecondElapsed));
+
     Self {
       link,
       props,
-      board
+      board,
+      remaining_mines: props.mines as i8,
+      timer,
+      seconds_elapsed: 0
     }
   }
 
@@ -81,12 +97,14 @@ impl Component for Board {
     match msg {
       Self::Message::CellMsg(x, y, action) => match action {
         CellAction::Clear => {
-          // self.board[y][x].state = CellState::Cleared
           self.board.clear_cell(x, y);
         },
         CellAction::Flag => {
-          self.board.flag_cell(x, y);
+          self.remaining_mines -= self.board.flag_cell(x, y);
         }
+      },
+      Self::Message::SecondElapsed => {
+        self.seconds_elapsed += 1;
       }
     }
     true
@@ -99,16 +117,17 @@ impl Component for Board {
 
   fn view(&self) -> Html {
     html! {
-      <div class="board">
-        <div class="game-info">
-          <span class="info"></span>
-          <br />
-          <span class="info"></span>
+      <>
+        <div class="game--info">
+          <div class="info"><Bomb />{ self.remaining_mines }</div>
+          <div class="info">{ self.seconds_elapsed }{ "S" }</div>
         </div>
-        { 
-          self.render_cell_table()
-        }
-      </div>
+        <div class="board">
+          { 
+            self.render_cell_table()
+          }
+        </div>
+      </>
     }
   }
 }

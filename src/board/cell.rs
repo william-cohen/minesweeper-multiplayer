@@ -4,7 +4,7 @@ use yew::Properties;
 
 mod flag;
 use crate::board::cell::flag::Flag;
-mod bomb;
+pub mod bomb;
 use crate::board::cell::bomb::Bomb;
 
 #[derive(Clone, Copy, Debug)]

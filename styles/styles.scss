@@ -7,14 +7,31 @@ $bombIconColor: black;
 $clearedColor: $background;
 $cellColor: #A6D3A0;
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 body {
   background-color: $background;
+  font-family: 'Montserrat', sans-serif;
+}
+
+div.game--info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: $textColor;
+  .info {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    svg {
+      width: 15px;
+      fill: $textColor;
+    }
+  }
 }
 
 div.board {
   display: flex;
-  flex-wrap: wrap;
-  /* -webkit-box-pack: center; */
   justify-content: center;
   margin: 10px auto 0px;
   width: 414px;
@@ -34,6 +51,7 @@ div.board {
     &.cleared {
       background-color: $clearedColor;
       color: $textColor;
+      font-family: 'Montserrat', sans-serif;
     }
     &.mine {
       background-color: $bombCellColor;

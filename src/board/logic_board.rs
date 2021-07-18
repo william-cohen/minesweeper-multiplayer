@@ -166,18 +166,24 @@ impl LogicBoard {
     }
   }
 
-  pub fn flag_cell(self: &mut Self, x: usize, y: usize) {
+  pub fn flag_cell(self: &mut Self, x: usize, y: usize) -> i8 {
     ConsoleService::info(format!("[Board] Flagging cell: {:?}", (x, y)).as_str());
 
     let cell = self.get_cell_mut(x, y);
     
-    cell.map(|cell| {
-      cell.state = match cell.state {
-        CellState::Flagged => CellState::Idle,
-        CellState::Idle => CellState::Flagged,
-        _ => cell.state
+    cell.map_or(0, |cell| {
+      match cell.state {
+        CellState::Flagged => {
+          cell.state = CellState::Idle;
+          -1
+        },
+        CellState::Idle => {
+          cell.state =CellState::Flagged;
+          1
+        },
+        _ => 0
       }
-    });
+    })
   }
 
   pub fn get_board_rows(self: &Self) -> Vec<Vec<CellInfo>> {
