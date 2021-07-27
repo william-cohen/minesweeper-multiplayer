@@ -10,12 +10,10 @@ use yew::services::interval::IntervalTask;
 use yew::virtual_dom::VNode::*;
 use yew::virtual_dom::VList;
 
-mod cell;
-use cell::{Cell, CellInfo, CellState, CellAction};
-mod logic_board;
-use logic_board::LogicBoard;
+use crate::cell::cell::*;
+use crate::logic::logic_board::LogicBoard;
 
-use crate::board::cell::bomb::Bomb;
+use crate::cell::icons::bomb::Bomb;
 
 #[derive(Properties, Copy, Clone)]
 pub struct Props {

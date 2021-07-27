@@ -5,7 +5,7 @@ use yew::services::console::ConsoleService;
 
 use array2d::Array2D;
 
-use super::cell::{CellInfo, CellState, CellValue};
+use crate::cell::cell::*;
 
 pub struct LogicBoard {
   width: usize,

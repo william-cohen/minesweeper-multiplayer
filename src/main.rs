@@ -2,7 +2,11 @@ use yew::prelude::*;
 use yew::ComponentLink;
 
 mod board;
+mod cell;
+mod logic;
+
 use board::Board;
+
 
 enum Msg {
   AddOne,

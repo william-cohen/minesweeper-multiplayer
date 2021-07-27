@@ -2,10 +2,9 @@ use yew::prelude::*;
 use yew::ComponentLink;
 use yew::Properties;
 
-mod flag;
-use crate::board::cell::flag::Flag;
-pub mod bomb;
-use crate::board::cell::bomb::Bomb;
+use crate::cell::icons::flag::Flag;
+use crate::cell::icons::bomb::Bomb;
+
 
 #[derive(Clone, Copy, Debug)]
 pub enum CellState {
